@@ -39,7 +39,18 @@
     <li><button class="ntab locked" data-page="quiz"       onclick="tryPage('quiz')">✏️ Quiz</button></li>
     <li><button class="ntab locked" data-page="games"      onclick="tryPage('games')">🎮 Games</button></li>
     <li><button class="ntab"        data-page="calendar"   onclick="showPage('calendar')">📅 Calendar</button></li>
+    <li><button class="ntab"        data-page="profile"    onclick="showPage('profile')">🏅 Profile</button></li>
   </ul>
+  <div class="xp-nav-wrap">
+    <div id="nav-avatar"></div>
+    <div>
+      <div class="xp-bar-wrap">
+        <div class="xp-bar-label" id="xp-label">0 XP</div>
+        <div class="xp-bar-track"><div class="xp-bar-inner" id="xp-bar-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="xp-level-badge" id="xp-level">Lv 1</div>
+  </div>
 </nav>
 
 <div id="toast"></div>
@@ -257,6 +268,57 @@
   </div>
 </div>
 
+<!-- ════════════════════════════════════ PROFILE ════════════════════════════════════ -->
+<div class="page" id="page-profile">
+  <div class="wrap">
+    <div class="hero">
+      <h1>🏅 Profile &amp; Rewards</h1>
+      <p>Earn XP by learning, answering questions, and completing quizzes. Spend it on avatars!</p>
+    </div>
+
+    <!-- Profile header -->
+    <div class="prof-header">
+      <div id="prof-avatar-big"></div>
+      <div class="prof-info">
+        <h2 id="prof-level">Level 1</h2>
+        <p id="prof-xp">0 XP available</p>
+        <div class="prof-stats">
+          <div class="prof-stat"><b id="prof-total">0</b>Total XP</div>
+          <div class="prof-stat"><b id="prof-streak">0</b>Day Streak</div>
+          <div class="prof-stat"><b id="badges-count">0 / 18</b>Badges</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avatar Shop -->
+    <div class="shop-section">
+      <h3>🛍️ Avatar Shop</h3>
+      <div class="av-grid" id="avatar-grid"></div>
+    </div>
+
+    <!-- Badges -->
+    <div class="shop-section">
+      <h3>🏅 Badges</h3>
+      <div class="badges-count-row" id="badges-count"></div>
+      <div class="badges-grid" id="badges-grid"></div>
+    </div>
+
+    <!-- XP Guide -->
+    <div class="shop-section">
+      <h3>⚡ How to Earn XP</h3>
+      <div class="grid-3">
+        <div class="card card-sm"><b style="color:var(--ye)">+5 XP</b><p style="color:var(--tx2);font-size:.85rem;margin-top:4px;">Reveal a content card</p></div>
+        <div class="card card-sm"><b style="color:var(--ye)">+20 XP</b><p style="color:var(--tx2);font-size:.85rem;margin-top:4px;">Answer a checkpoint correctly</p></div>
+        <div class="card card-sm"><b style="color:var(--ye)">+50 XP</b><p style="color:var(--tx2);font-size:.85rem;margin-top:4px;">Complete a subtopic</p></div>
+        <div class="card card-sm"><b style="color:var(--ye)">+10 XP</b><p style="color:var(--tx2);font-size:.85rem;margin-top:4px;">Correct quiz answer</p></div>
+        <div class="card card-sm"><b style="color:var(--ye)">+30–60 XP</b><p style="color:var(--tx2);font-size:.85rem;margin-top:4px;">Quiz bonus (80%+ / 100%)</p></div>
+        <div class="card card-sm"><b style="color:var(--ye)">+25 XP</b><p style="color:var(--tx2);font-size:.85rem;margin-top:4px;">Review on scheduled date</p></div>
+        <div class="card card-sm"><b style="color:var(--ye)">+12–15 XP</b><p style="color:var(--tx2);font-size:.85rem;margin-top:4px;">Correct answer in games</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════════════════════════════ SCRIPTS ════════════════════════════════════ -->
 <script src="js/data.js"></script>
 <script src="js/state.js"></script>
@@ -280,6 +342,8 @@
     refreshLocks();
     initLearn();
     renderCalendar();
+    updateXPBar();
+    document.getElementById('nav-avatar').innerHTML = renderAvatar(App.equippedAvatar, 28);
   }
 
   /* Auto-start if previously visited */
@@ -288,10 +352,19 @@
     refreshLocks();
     initLearn();
     renderCalendar();
+    updateXPBar();
+    document.getElementById('nav-avatar').innerHTML = renderAvatar(App.equippedAvatar, 28);
     if (App.learned.size > 0 || App.stProgress.some(sp => sp.shown > 0)) {
       document.getElementById('splash').classList.add('gone');
     }
   });
+
+  // Patch showPage to handle profile
+  const _origShowPage = showPage;
+  function showPage(name) {
+    _origShowPage(name);
+    if (name === 'profile') renderProfile();
+  }
 </script>
 </body>
 </html>
