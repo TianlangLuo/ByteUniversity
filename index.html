@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CS5 · Issues &amp; Impact · GCSE Computer Science</title>
+  <title>ByteUniversity · CS5 Issues &amp; Impact</title>
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/learn.css">
   <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
 
-<!-- ════════════════════════════════════ SPLASH ════════════════════════════════════ -->
+<!-- ════════════════════ SPLASH ════════════════════ -->
 <div id="splash">
-  <div class="sp-eye">Edexcel GCSE Computer Science</div>
+  <div class="sp-eye">ByteUniversity · Edexcel GCSE Computer Science</div>
   <div class="sp-h">Issues &amp;<br>Impact</div>
   <div class="sp-sub">An interactive revision platform covering Topic 5 — from e-waste to encryption.</div>
   <div class="sp-chips">
@@ -27,20 +27,24 @@
   <button class="sp-btn" onclick="startApp()">Start Learning →</button>
 </div>
 
-<!-- ════════════════════════════════════ NAV ════════════════════════════════════ -->
+<!-- ════════════════════ NAV ════════════════════ -->
 <nav id="nav">
-  <a href="#" class="nb" onclick="return false;">
-    <span class="nb-title">CS5 · Issues &amp; Impact</span>
-    <span class="nb-badge">GCSE</span>
+  <a href="#" class="nb" onclick="showPage('learn');return false;">
+    <span class="bu-logo">B<span class="bu-u">U</span></span>
+    <span class="nb-title">ByteUniversity</span>
+    <span class="nb-badge">CS5</span>
   </a>
-  <ul class="nav-tabs">
-    <li><button class="ntab on"     data-page="learn"      onclick="showPage('learn')">📖 Learn</button></li>
-    <li><button class="ntab locked" data-page="flashcards" onclick="tryPage('flashcards')">🃏 Flashcards</button></li>
-    <li><button class="ntab locked" data-page="quiz"       onclick="tryPage('quiz')">✏️ Quiz</button></li>
-    <li><button class="ntab locked" data-page="games"      onclick="tryPage('games')">🎮 Games</button></li>
-    <li><button class="ntab"        data-page="calendar"   onclick="showPage('calendar')">📅 Calendar</button></li>
-    <li><button class="ntab"        data-page="profile"    onclick="showPage('profile')">🏅 Profile</button></li>
-  </ul>
+  <div class="nav-tabs">
+    <button class="ntab on"     data-page="learn"      onclick="showPage('learn')">📖 Learn</button>
+    <button class="ntab locked" data-page="flashcards" onclick="tryPage('flashcards')">🃏 Flashcards</button>
+    <button class="ntab locked" data-page="quiz"       onclick="tryPage('quiz')">✏️ Quiz</button>
+    <button class="ntab locked" data-page="games"      onclick="tryPage('games')">🎮 Games</button>
+    <button class="ntab"        data-page="calendar"   onclick="showPage('calendar')">📅 Calendar</button>
+    <button class="ntab"        data-page="podcast"    onclick="showPage('podcast')">🎙️ Podcast</button>
+    <button class="ntab"        data-page="resources"  onclick="showPage('resources')">🔗 Resources</button>
+    <button class="ntab"        data-page="profile"    onclick="showPage('profile')">🏅 Profile</button>
+    <button class="ntab"        data-page="about"      onclick="showPage('about')">ℹ️ About</button>
+  </div>
   <div class="xp-nav-wrap">
     <div id="nav-avatar"></div>
     <div>
@@ -55,43 +59,36 @@
 
 <div id="toast"></div>
 
-<!-- ════════════════════════════════════ LEARN ════════════════════════════════════ -->
+<!-- ════════════════════ LEARN ════════════════════ -->
 <div class="page on" id="page-learn">
   <div class="wrap-sm">
     <div class="hero">
       <h1>🖥️ Issues &amp; Impact</h1>
       <p>Work through each subtopic — checkpoint questions unlock every two cards.</p>
     </div>
-
     <div class="st-nav" id="st-nav"></div>
-
     <div class="lp-bar-row">
       <span class="lp-bar-label" id="lp-label">0%</span>
       <div class="lp-bar-track"><div class="lp-bar-fill" id="lp-fill" style="width:0%"></div></div>
     </div>
-
     <div id="learn-area"></div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════ FLASHCARDS ════════════════════════════════════ -->
+<!-- ════════════════════ FLASHCARDS ════════════════════ -->
 <div class="page" id="page-flashcards">
   <div class="wrap-sm">
     <div class="hero">
       <h1>🃏 Flashcards</h1>
       <p>Click a card to flip it. Use the arrows to move through the deck.</p>
     </div>
-
     <div class="fc-bar">
-      <select class="sel" id="fc-sel" onchange="loadFC()">
-        <option value="all">All Topics</option>
-      </select>
+      <select class="sel" id="fc-sel" onchange="loadFC()"><option value="all">All Topics</option></select>
       <button class="btn btn-ghost btn-sm" onclick="shuffleFC()">🔀 Shuffle</button>
       <button class="btn btn-ghost btn-sm" onclick="prevFC()">← Prev</button>
       <span class="fc-count" id="fc-count">1 / 1</span>
-      <button class="btn btn-pu btn-sm"   onclick="nextFC()">Next →</button>
+      <button class="btn btn-pu btn-sm" onclick="nextFC()">Next →</button>
     </div>
-
     <div class="fc-wrap" onclick="flipFC()">
       <div class="flashcard" id="fc-card">
         <div class="fc-face fc-front">
@@ -108,33 +105,26 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════ QUIZ ════════════════════════════════════ -->
+<!-- ════════════════════ QUIZ ════════════════════ -->
 <div class="page" id="page-quiz">
   <div class="wrap-sm">
     <div class="hero">
       <h1>✏️ Topic Quiz</h1>
       <p>Score 80%+ to mark topics as reviewed and schedule them on your calendar!</p>
     </div>
-
     <div class="qz-wrap">
       <div class="qz-bar">
-        <select class="sel" id="qz-sel" onchange="startQuiz()" style="flex:1;min-width:160px;">
-          <option value="all">All Topics</option>
-        </select>
+        <select class="sel" id="qz-sel" onchange="startQuiz()" style="flex:1;min-width:160px;"><option value="all">All Topics</option></select>
         <button class="btn btn-pu btn-sm" onclick="startQuiz()">🔄 New Quiz</button>
       </div>
-
-      <!-- Question card -->
       <div class="qz-card" id="qz-card">
         <div class="qz-pips" id="qz-pips"></div>
-        <div class="qz-num" id="qz-num">Question 1 of 15</div>
-        <div class="qz-q"   id="qz-q">Loading…</div>
-        <div class="qopts"  id="qz-opts"></div>
-        <div class="qfb"    id="qz-fb"   style="display:none;"></div>
+        <div class="qz-num"  id="qz-num">Question 1 of 15</div>
+        <div class="qz-q"    id="qz-q">Loading…</div>
+        <div class="qopts"   id="qz-opts"></div>
+        <div class="qfb"     id="qz-fb" style="display:none;"></div>
         <button class="btn btn-pu" id="qz-next" style="display:none;margin-top:16px;" onclick="nextQzQ()">Next Question →</button>
       </div>
-
-      <!-- Score screen -->
       <div class="score-screen" id="qz-score" style="display:none;">
         <div class="score-ring">
           <svg id="score-ring-svg" viewBox="0 0 136 136"></svg>
@@ -148,14 +138,13 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════ GAMES ════════════════════════════════════ -->
+<!-- ════════════════════ GAMES ════════════════════ -->
 <div class="page" id="page-games">
   <div class="wrap">
     <div class="hero">
       <h1>🎮 Learning Games</h1>
       <p>Answer questions correctly to score points. Complete all correctly to mark topics reviewed!</p>
     </div>
-
     <div class="games-grid">
       <div class="gcard pu" onclick="openGame('snake')">
         <div class="gcard-icon">🐍</div>
@@ -174,8 +163,6 @@
       </div>
     </div>
   </div>
-
-  <!-- SNAKE MODAL -->
   <div class="gmodal" id="gm-snake">
     <div class="ginner" style="max-width:480px;">
       <button class="gclose" onclick="closeGame('snake')">✕</button>
@@ -191,15 +178,11 @@
         <div class="gopts" id="snake-q-opts"></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap;">
-        <select class="sel" id="gm-snake-sel" style="flex:1;" onchange="initSnake()">
-          <option value="all">All Topics</option>
-        </select>
+        <select class="sel" id="gm-snake-sel" style="flex:1;" onchange="initSnake()"><option value="all">All Topics</option></select>
         <button class="btn btn-gn btn-sm" onclick="initSnake()">▶ Start</button>
       </div>
     </div>
   </div>
-
-  <!-- MEMORY MODAL -->
   <div class="gmodal" id="gm-memory">
     <div class="ginner" style="max-width:680px;">
       <button class="gclose" onclick="closeGame('memory')">✕</button>
@@ -211,15 +194,11 @@
       </div>
       <div class="mem-grid" id="mem-grid"></div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
-        <select class="sel" id="gm-memory-sel" style="flex:1;" onchange="initMemory()">
-          <option value="all">All Topics</option>
-        </select>
+        <select class="sel" id="gm-memory-sel" style="flex:1;" onchange="initMemory()"><option value="all">All Topics</option></select>
         <button class="btn btn-gn btn-sm" onclick="initMemory()">▶ New Game</button>
       </div>
     </div>
   </div>
-
-  <!-- PAC-MAN MODAL -->
   <div class="gmodal" id="gm-pac">
     <div class="ginner" style="max-width:500px;">
       <button class="gclose" onclick="closeGame('pac')">✕</button>
@@ -241,23 +220,20 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════ CALENDAR ════════════════════════════════════ -->
+<!-- ════════════════════ CALENDAR ════════════════════ -->
 <div class="page" id="page-calendar">
   <div class="wrap">
     <div class="hero">
       <h1>📅 Spaced Repetition Calendar</h1>
       <p>Complete quizzes or games to increase your mastery level and schedule future reviews.</p>
     </div>
-
     <div class="cal-wrap">
       <div class="mastery-grid" id="mastery-panel"></div>
-
       <div class="cal-legend">
         <div class="cl-item"><div class="cl-dot" style="background:var(--pu);"></div> Due today</div>
         <div class="cl-item"><div class="cl-dot" style="background:var(--pk);"></div> Overdue</div>
         <div class="cl-item"><div class="cl-dot" style="background:var(--gn);"></div> Reviewed today</div>
       </div>
-
       <div class="cal-hdr">
         <button class="cal-nav" onclick="changeMonth(-1)">← Prev</button>
         <div class="cal-title" id="cal-month"></div>
@@ -268,15 +244,64 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════ PROFILE ════════════════════════════════════ -->
+<!-- ════════════════════ PODCAST ════════════════════ -->
+<div class="page" id="page-podcast">
+  <div class="podcast-hero">
+    <div class="podcast-bg" style="background-image:url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1400&q=80')">
+      <div class="podcast-bg-overlay"></div>
+      <div class="podcast-hero-content">
+        <div class="podcast-tag">🎙️ ByteUniversity Podcast</div>
+        <h1 class="podcast-title">The Invisible Weight of<br>Your Digital Life</h1>
+        <p class="podcast-sub">A deep dive into the environmental and ethical cost of our digital world — from e-waste to data privacy, AI bias to cyber threats.</p>
+        <div class="podcast-meta">
+          <span>🕐 ~30 min listen</span>
+          <span>📚 Covers full Topic 5</span>
+          <span>🎧 Great for commutes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrap-sm">
+    <div class="podcast-player-card">
+      <div class="podcast-player-top">
+        <div class="podcast-artwork">🎙️</div>
+        <div class="podcast-info">
+          <div class="podcast-ep">Episode 1 · CS5 Issues &amp; Impact</div>
+          <div class="podcast-ep-title">The Invisible Weight of Your Digital Life</div>
+          <div class="podcast-ep-desc">Covering environmental impact, personal data, legislation, AI ethics, intellectual property, cyber threats, and protection methods.</div>
+        </div>
+      </div>
+      <audio id="podcast-audio" controls preload="metadata" style="width:100%;margin-top:18px;border-radius:10px;accent-color:var(--pu);">
+        <source src="The_Invisible_Weight_of_Your_Digital_Life.m4a" type="audio/mp4">
+        Your browser does not support the audio element.
+      </audio>
+      <div class="podcast-topics">
+        <div class="podcast-topic-label">Topics covered in this episode:</div>
+        <div class="podcast-topic-chips">
+          <span class="sp-chip">🌿 Environment</span>
+          <span class="sp-chip">👤 Personal Data</span>
+          <span class="sp-chip">⚖️ Legislation</span>
+          <span class="sp-chip">🤖 AI &amp; Ethics</span>
+          <span class="sp-chip">📜 IP &amp; Copyright</span>
+          <span class="sp-chip">🔓 Cyber Threats</span>
+          <span class="sp-chip">🛡️ Protection</span>
+        </div>
+      </div>
+    </div>
+    <div class="podcast-tip">
+      <span>💡</span>
+      <p>Listen through once to get a feel for the topic, then use the <strong>Learn</strong> and <strong>Flashcard</strong> sections to lock in the details. Coming back to re-listen after revision is a great spaced repetition technique.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ PROFILE ════════════════════ -->
 <div class="page" id="page-profile">
   <div class="wrap">
     <div class="hero">
       <h1>🏅 Profile &amp; Rewards</h1>
       <p>Earn XP by learning, answering questions, and completing quizzes. Spend it on avatars!</p>
     </div>
-
-    <!-- Profile header -->
     <div class="prof-header">
       <div id="prof-avatar-big"></div>
       <div class="prof-info">
@@ -285,25 +310,19 @@
         <div class="prof-stats">
           <div class="prof-stat"><b id="prof-total">0</b>Total XP</div>
           <div class="prof-stat"><b id="prof-streak">0</b>Day Streak</div>
-          <div class="prof-stat"><b id="badges-count">0 / 18</b>Badges</div>
+          <div class="prof-stat"><b id="prof-badges-stat">0 / 18</b>Badges</div>
         </div>
       </div>
     </div>
-
-    <!-- Avatar Shop -->
     <div class="shop-section">
       <h3>🛍️ Avatar Shop</h3>
       <div class="av-grid" id="avatar-grid"></div>
     </div>
-
-    <!-- Badges -->
     <div class="shop-section">
       <h3>🏅 Badges</h3>
       <div class="badges-count-row" id="badges-count"></div>
       <div class="badges-grid" id="badges-grid"></div>
     </div>
-
-    <!-- XP Guide -->
     <div class="shop-section">
       <h3>⚡ How to Earn XP</h3>
       <div class="grid-3">
@@ -319,14 +338,298 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════ SCRIPTS ════════════════════════════════════ -->
+<!-- ════════════════════ RESOURCES ════════════════════ -->
+<div class="page" id="page-resources">
+  <div class="wrap">
+    <div class="hero">
+      <h1>🔗 Resources</h1>
+      <p>Curriculum videos from Craig &amp; Dave, plus handpicked articles, documentaries and journals to go further.</p>
+    </div>
+
+    <!-- ── CRAIG & DAVE VIDEOS ── -->
+    <div class="res-section">
+      <div class="res-section-hd">
+        <div class="res-section-icon" style="background:rgba(244,114,182,.12);border-color:rgba(244,114,182,.3);">🎬</div>
+        <div>
+          <div class="res-section-title">Craig &amp; Dave — Edexcel GCSE Videos</div>
+          <div class="res-section-sub">Official curriculum-aligned videos covering every Topic 5 subtopic. Free to watch on the Craig &amp; Dave student site.</div>
+        </div>
+      </div>
+      <div class="res-grid">
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-environmental-impact-of-computer-science/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">Environmental Impact of Computer Science</div>
+          <div class="res-card-desc">Manufacturing, energy consumption, e-waste, WEEE regulations, and responsible ownership.</div>
+          <div class="res-card-src">craigndave.org · #59</div>
+        </a>
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-ethical-legal-issues-with-collection-of-personal-data/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">Ethical &amp; Legal Issues: Personal Data</div>
+          <div class="res-card-desc">Digital footprints, DPA 2018, data subject rights, and personal data ownership.</div>
+          <div class="res-card-src">craigndave.org · #60</div>
+        </a>
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-other-ethical-legal-issues/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">Other Ethical &amp; Legal Issues</div>
+          <div class="res-card-desc">AI, machine learning, algorithmic bias, accountability and legal liability.</div>
+          <div class="res-card-src">craigndave.org · #61</div>
+        </a>
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-intellectual-property-protection/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">Intellectual Property Protection</div>
+          <div class="res-card-desc">Copyright, patents, trademarks, licensing, open-source vs proprietary software.</div>
+          <div class="res-card-src">craigndave.org · #62</div>
+        </a>
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-malware/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">Malware</div>
+          <div class="res-card-desc">Viruses, worms, trojans, ransomware, keyloggers, botnets and DDoS attacks.</div>
+          <div class="res-card-src">craigndave.org · #63</div>
+        </a>
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-how-hackers-exploit-technical-vulnerabilities/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">How Hackers Exploit Technical Vulnerabilities</div>
+          <div class="res-card-desc">Unpatched software, default passwords, open ports, and zero-day exploits.</div>
+          <div class="res-card-src">craigndave.org · #64</div>
+        </a>
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-social-engineering/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">Social Engineering</div>
+          <div class="res-card-desc">Phishing, pretexting, baiting, quid pro quo and shoulder-surfing techniques.</div>
+          <div class="res-card-src">craigndave.org · #65</div>
+        </a>
+        <a class="res-card" href="https://craigndave.org/videos/gcse-edexcel-topic-5-protecting-digital-systems-and-data/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-video">▶ Video</span><span class="res-tag res-tag-curriculum">Spec</span></div>
+          <div class="res-card-title">Protecting Digital Systems and Data</div>
+          <div class="res-card-desc">Firewalls, anti-malware, encryption, backups, and acceptable use policies.</div>
+          <div class="res-card-src">craigndave.org · #66</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── FURTHER EXPLORING ── -->
+    <div class="res-section">
+      <div class="res-section-hd">
+        <div class="res-section-icon" style="background:rgba(99,102,241,.12);border-color:rgba(99,102,241,.3);">🌍</div>
+        <div>
+          <div class="res-section-title">Further Exploring — Beyond the Spec</div>
+          <div class="res-section-sub">Documentaries, articles, and research that bring the topic to life. Not required for the exam, but genuinely fascinating.</div>
+        </div>
+      </div>
+
+      <!-- E-Waste & Environment -->
+      <div class="res-sub-heading">🌿 Environment &amp; E-Waste</div>
+      <div class="res-grid">
+        <a class="res-card" href="https://www.youtube.com/watch?v=eT34ypRodB0" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-doc">🎥 Documentary</span></div>
+          <div class="res-card-title">Recycling E-Waste: Good for Business &amp; the Environment</div>
+          <div class="res-card-desc">DW Documentary explores companies renting devices instead of selling, plus a startup recovering materials from solar modules. Shows the right-to-repair movement in action.</div>
+          <div class="res-card-src">YouTube · DW Documentary</div>
+        </a>
+        <a class="res-card" href="https://www.youtube.com/watch?v=xW2-udt5bFo" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-doc">🎥 Documentary</span></div>
+          <div class="res-card-title">How the Rich World's Electronic Waste Affects Poor Countries</div>
+          <div class="res-card-desc">ENDEVR investigative documentary exposing how discarded electronics from wealthy nations end up in African scrapyards, with devastating consequences for local communities.</div>
+          <div class="res-card-src">YouTube · ENDEVR</div>
+        </a>
+        <a class="res-card" href="https://www.youtube.com/watch?v=iHk35aeahQo" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-doc">🎥 Documentary</span></div>
+          <div class="res-card-title">The Digital Afterlife: Unravelling the E-Waste Crisis</div>
+          <div class="res-card-desc">A full documentary on what really happens to your old phones, tablets and computers after you throw them away — from shipping containers to landfill sites.</div>
+          <div class="res-card-src">YouTube · E-Life</div>
+        </a>
+      </div>
+
+      <!-- Personal Data & Privacy -->
+      <div class="res-sub-heading">👤 Personal Data &amp; Privacy</div>
+      <div class="res-grid">
+        <a class="res-card" href="https://www.youtube.com/watch?v=0OL3vH-UKaY" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-doc">🎥 Documentary</span></div>
+          <div class="res-card-title">The Great Hack (Netflix)</div>
+          <div class="res-card-desc">The Cambridge Analytica story — how personal data harvested from millions of Facebook users was used to influence the 2016 US election and Brexit vote. Raises serious questions about data ownership and consent.</div>
+          <div class="res-card-src">Netflix · Cambridge Analytica</div>
+        </a>
+        <a class="res-card" href="https://www.ted.com/talks/carole_cadwalladr_facebook_s_role_in_brexit_and_the_threat_to_democracy" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-talk">💬 TED Talk</span></div>
+          <div class="res-card-title">Facebook's Role in Brexit — and the Threat to Democracy</div>
+          <div class="res-card-desc">Journalist Carole Cadwalladr breaks down how personal data and targeted advertising were weaponised for political ends. A chilling real-world extension of what the DPA 2018 tries to prevent.</div>
+          <div class="res-card-src">TED · Carole Cadwalladr</div>
+        </a>
+        <a class="res-card" href="https://www.ted.com/talks/shoshana_zuboff_a_new_theory_of_capitalism_that_turns_surveillance_into_profit" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-talk">💬 TED Talk</span></div>
+          <div class="res-card-title">Surveillance Capitalism — How Your Data Becomes Their Profit</div>
+          <div class="res-card-desc">Shoshana Zuboff explains how tech companies harvest behavioural data to predict and influence human behaviour. Essential context for understanding why the DPA 2018 and GDPR exist.</div>
+          <div class="res-card-src">TED · Shoshana Zuboff</div>
+        </a>
+      </div>
+
+      <!-- AI & Ethics -->
+      <div class="res-sub-heading">🤖 AI, Bias &amp; Ethics</div>
+      <div class="res-grid">
+        <a class="res-card" href="https://www.ted.com/talks/joy_buolamwini_how_i_m_fighting_bias_in_algorithms" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-talk">💬 TED Talk</span></div>
+          <div class="res-card-title">How I'm Fighting Bias in Algorithms</div>
+          <div class="res-card-desc">MIT researcher Joy Buolamwini discovered that facial recognition systems worked far worse on darker skin tones. A vivid, accessible demonstration of algorithmic bias and why it matters.</div>
+          <div class="res-card-src">TED · Joy Buolamwini</div>
+        </a>
+        <a class="res-card" href="https://spssi.onlinelibrary.wiley.com/doi/10.1111/asap.70031" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-journal">📄 Journal</span></div>
+          <div class="res-card-title">AI as Moral Cover: How Algorithmic Bias Exploits Psychology</div>
+          <div class="res-card-desc">Peer-reviewed research showing how AI systems allow people to perpetuate discrimination while maintaining beliefs in their own objectivity — the "moral cover" phenomenon. Directly relevant to the black-box problem.</div>
+          <div class="res-card-src">Society for Psychological Study · 2025</div>
+        </a>
+        <a class="res-card" href="https://www.frontiersin.org/journals/artificial-intelligence/articles/10.3389/frai.2024.1320277/full" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-journal">📄 Journal</span></div>
+          <div class="res-card-title">Algorithmic Discrimination: Types and Regulatory Measures</div>
+          <div class="res-card-desc">Academic analysis of five primary types of algorithmic bias and how different legal jurisdictions are responding. Connects directly to AI ethics and the regulatory challenges of the black-box problem.</div>
+          <div class="res-card-src">Frontiers in AI · 2024</div>
+        </a>
+      </div>
+
+      <!-- Cyber Threats -->
+      <div class="res-sub-heading">🔓 Cyber Threats &amp; Hacking</div>
+      <div class="res-grid">
+        <a class="res-card" href="https://www.youtube.com/watch?v=sOicR2enFsY" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-doc">🎥 Documentary</span></div>
+          <div class="res-card-title">Cyberattacks, Data Encryption, Extortion — How Cybercriminals Operate</div>
+          <div class="res-card-desc">DW Documentary reveals how ransomware gangs operate like professional businesses — with customer service, negotiators, and HR departments. A real-world look at the ransomware threat.</div>
+          <div class="res-card-src">YouTube · DW Documentary</div>
+        </a>
+        <a class="res-card" href="https://www.youtube.com/watch?v=3Pj_Iq8RWSU" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-doc">🎥 Documentary</span></div>
+          <div class="res-card-title">Zero Days — Stuxnet &amp; the World's First Cyber Weapon</div>
+          <div class="res-card-desc">Alex Gibney's acclaimed documentary about Stuxnet — the malware allegedly created by the US and Israel to sabotage Iran's nuclear programme. A real-life Offence 3 (Computer Misuse Act) on a nation-state scale.</div>
+          <div class="res-card-src">YouTube / Alex Gibney · 2016</div>
+        </a>
+        <a class="res-card" href="https://www.youtube.com/watch?v=aREgDHHm4kI" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-doc">🎥 Documentary</span></div>
+          <div class="res-card-title">Citizenfour — Edward Snowden &amp; Mass Surveillance</div>
+          <div class="res-card-desc">Oscar-winning documentary capturing the moment Snowden revealed the NSA's global surveillance programmes. Deeply relevant to privacy, personal data, and civil liberties — and what happens when those in power exploit technical access.</div>
+          <div class="res-card-src">YouTube / Laura Poitras · 2014</div>
+        </a>
+      </div>
+
+      <!-- IP & Software -->
+      <div class="res-sub-heading">📜 Intellectual Property</div>
+      <div class="res-grid">
+        <a class="res-card" href="https://www.ted.com/talks/larry_lessig_laws_that_choke_creativity" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-talk">💬 TED Talk</span></div>
+          <div class="res-card-title">Laws That Choke Creativity</div>
+          <div class="res-card-desc">Harvard Law professor Larry Lessig argues that current copyright law is strangling creativity and culture. A compelling argument for why Creative Commons and open licensing models exist.</div>
+          <div class="res-card-src">TED · Larry Lessig</div>
+        </a>
+        <a class="res-card" href="https://www.scaleai.ca/blog/is-open-source-software-ip/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-article">📰 Article</span></div>
+          <div class="res-card-title">Is Open Source Software "IP"? Debunking the Myth</div>
+          <div class="res-card-desc">Accessible explainer busting the myth that open source code has no intellectual property protection. Shows how copyright still applies even to freely shared code — and what happens if you violate a licence.</div>
+          <div class="res-card-src">Scale AI · IP Without Jargon</div>
+        </a>
+        <a class="res-card" href="https://publications.lawschool.cornell.edu/jlpp/2024/11/21/ai-hr-algorithmic-discrimination-in-the-workplace/" target="_blank" rel="noopener">
+          <div class="res-card-top"><span class="res-tag res-tag-journal">📄 Journal</span></div>
+          <div class="res-card-title">Amazon's AI Hiring Tool &amp; Gender Discrimination</div>
+          <div class="res-card-desc">Cornell Law review of how Amazon's AI recruitment system discriminated against women because of biased training data — a perfect real-world example of algorithmic bias meeting IP and employment law.</div>
+          <div class="res-card-src">Cornell Journal of Law · 2024</div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ ABOUT (UPDATED) ════════════════════ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="about-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1400&q=80')">
+      <div class="about-hero-overlay"></div>
+      <div class="about-hero-content">
+        <div class="bu-logo-large">B<span>U</span></div>
+        <h1 class="about-title">ByteUniversity</h1>
+        <p class="about-tagline">Revision that actually works.</p>
+      </div>
+    </div>
+  </div>
+  <div class="wrap-sm">
+    <div class="about-intro">
+      <p>ByteUniversity is an interactive GCSE Computer Science revision platform built to go beyond passive reading. Every feature — from card-by-card content delivery to spaced repetition scheduling to playable games — is designed around how memory actually works.</p>
+    </div>
+    <div class="about-features">
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.3);">📖</div>
+        <div>
+          <div class="about-feat-title">Active Learning, Not Passive Reading</div>
+          <div class="about-feat-desc">Content reveals one card at a time, with checkpoint questions blocking progress until each concept is genuinely understood — no skimming allowed.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.3);">📅</div>
+        <div>
+          <div class="about-feat-title">Spaced Repetition Built In</div>
+          <div class="about-feat-desc">A smart calendar schedules exactly when to revisit each topic based on performance, using the same memory science behind tools like Anki.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);">⚡</div>
+        <div>
+          <div class="about-feat-title">XP &amp; Avatars</div>
+          <div class="about-feat-desc">Every correct answer, completed subtopic, and on-time review earns XP — spent in the avatar shop to unlock new characters, keeping motivation high throughout revision.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.3);">🏅</div>
+        <div>
+          <div class="about-feat-title">18 Unlockable Badges</div>
+          <div class="about-feat-desc">Real study habits get rewarded. Early Bird, Week Warrior, Perfectionist, Speed Runner — badges that encourage the right behaviours, not just time on screen.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);">🎮</div>
+        <div>
+          <div class="about-feat-title">Three Playable Games</div>
+          <div class="about-feat-desc">Snake, Memory Match, and Pac-Man aren't decorations — answer questions correctly to stay alive, turning vocabulary drilling into something students actually want to do.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.3);">🎙️</div>
+        <div>
+          <div class="about-feat-title">Podcast for On-the-Go Revision</div>
+          <div class="about-feat-desc">A full-length audio episode covers every Topic 5 subtopic — perfect for commutes, walks, or winding down. Listen first to get the big picture, then drill the details.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.3);">🎬</div>
+        <div>
+          <div class="about-feat-title">Craig &amp; Dave Curriculum Videos</div>
+          <div class="about-feat-desc">All 8 official Craig &amp; Dave Edexcel Topic 5 videos are linked directly in the Resources section — perfectly matched to each subtopic for easy access.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);">🌍</div>
+        <div>
+          <div class="about-feat-title">Curated Further Reading</div>
+          <div class="about-feat-desc">Handpicked documentaries, TED talks, peer-reviewed journals, and articles go beyond the spec — connecting GCSE concepts to real-world events, from the Snowden revelations to Amazon's biased hiring AI.</div>
+        </div>
+      </div>
+      <div class="about-feat">
+        <div class="about-feat-icon" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);">📚</div>
+        <div>
+          <div class="about-feat-title">Covers the Full Spec</div>
+          <div class="about-feat-desc">All 7 Topic 5 subtopics, 60+ flashcards, 40+ quiz questions, and inline diagrams — everything needed for Edexcel GCSE Computer Science Topic 5 in one place.</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-footer">
+      <div class="bu-logo-large small">B<span>U</span></div>
+      <p>ByteUniversity · Built for Edexcel GCSE Computer Science</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ SCRIPTS ════════════════════ -->
 <script src="js/data.js"></script>
 <script src="js/state.js"></script>
 <script src="js/learn.js"></script>
 <script src="js/app.js"></script>
 
 <script>
-  /* ── Splash stars ── */
   for (let i = 0; i < 60; i++) {
     const s = document.createElement('div');
     s.className = 'star';
@@ -344,13 +647,11 @@
     document.getElementById('nav-avatar').innerHTML = renderAvatar(App.equippedAvatar, 28);
   }
 
-  /* ── Splash start button ── */
   function startApp() {
     document.getElementById('splash').classList.add('gone');
     boot();
   }
 
-  /* Auto-start if previously visited */
   window.addEventListener('DOMContentLoaded', () => {
     boot();
     if (App.learned.size > 0 || App.stProgress.some(sp => sp.shown > 0)) {
@@ -360,3 +661,4 @@
 </script>
 </body>
 </html>
+
