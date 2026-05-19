@@ -241,8 +241,7 @@ function showPage(name) {
   if (name === 'flashcards') initFC();
   if (name === 'quiz')       initQuiz();
   if (name === 'calendar')   renderCalendar();
-  if (name === 'profile')    renderProfile();
-}
+  if (name === 'profile')    renderProfile();}
 
 function tryPage(name) {
   if (App.learned.size === 0) {
