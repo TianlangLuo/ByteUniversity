@@ -235,11 +235,13 @@ function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.ntab').forEach(t => t.classList.remove('on'));
   document.getElementById('page-' + name).classList.add('on');
-  document.querySelector(`.ntab[data-page="${name}"]`).classList.add('on');
+  const activeTab = document.querySelector(`.ntab[data-page="${name}"]`);
+  if (activeTab) activeTab.classList.add('on');
 
   if (name === 'flashcards') initFC();
   if (name === 'quiz')       initQuiz();
   if (name === 'calendar')   renderCalendar();
+  if (name === 'profile')    renderProfile();
 }
 
 function tryPage(name) {
