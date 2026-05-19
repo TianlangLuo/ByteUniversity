@@ -591,6 +591,156 @@ function populateSel(id) {
   if ([...el.options].some(o => o.value === cur)) el.value = cur;
 }
 
+/* ══════════════ DASHBOARD ══════════════ */
+function renderDashboard() {
+  updateXPBar();
+  renderDashStats();
+  renderDashSubtopics();
+  renderDashDue();
+  renderDashBadges();
+  renderDashTileLocks();
+}
+
+function renderDashStats() {
+  const level = Math.floor(App.totalXpEarned / 200) + 1;
+  const learnedCount = App.learned.size;
+  const totalCards = SUBTOPICS.reduce((s, st) => s + st.cards.length, 0);
+  const shownCards = App.stProgress.reduce((s, sp) => s + sp.shown, 0);
+
+  // Hero stat card
+  const av = AVATARS.find(a => a.id === App.equippedAvatar) || AVATARS[0];
+  document.getElementById('dash-progress-row').innerHTML = `
+    <div class="dash-stat-item">
+      <div class="dash-stat-icon" style="background:${av.bg}">${av.emoji}</div>
+      <div><div class="dash-stat-label">Avatar</div><div class="dash-stat-val">${av.name}</div></div>
+    </div>
+    <div class="dash-stat-item">
+      <div class="dash-stat-icon" style="background:rgba(99,102,241,.15)">⚡</div>
+      <div><div class="dash-stat-label">Available XP</div><div class="dash-stat-val" style="color:var(--ye)">${App.xp} XP</div></div>
+    </div>
+    <div class="dash-stat-item">
+      <div class="dash-stat-icon" style="background:rgba(52,211,153,.12)">📚</div>
+      <div><div class="dash-stat-label">Subtopics Complete</div><div class="dash-stat-val" style="color:var(--gn)">${learnedCount} / ${SUBTOPICS.length}</div></div>
+    </div>
+    <div class="dash-stat-item">
+      <div class="dash-stat-icon" style="background:rgba(251,191,36,.12)">🔥</div>
+      <div><div class="dash-stat-label">Day Streak</div><div class="dash-stat-val" style="color:var(--ye)">${App.streakDays} day${App.streakDays !== 1 ? 's' : ''}</div></div>
+    </div>`;
+
+  // Stats pills bar
+  const dueCount = Object.values(App.sr).filter(sr => sr.nextReview && sr.nextReview <= todayStr()).length;
+  document.getElementById('dash-stats-bar').innerHTML = `
+    <div class="dash-stat-pill">
+      <div class="dash-stat-pill-val" style="color:var(--pu)">${App.totalXpEarned}</div>
+      <div class="dash-stat-pill-label">Total XP Earned</div>
+    </div>
+    <div class="dash-stat-pill">
+      <div class="dash-stat-pill-val" style="color:var(--gn)">${learnedCount}/${SUBTOPICS.length}</div>
+      <div class="dash-stat-pill-label">Subtopics Done</div>
+    </div>
+    <div class="dash-stat-pill">
+      <div class="dash-stat-pill-val" style="color:var(--ye)">${level}</div>
+      <div class="dash-stat-pill-label">Current Level</div>
+    </div>
+    <div class="dash-stat-pill">
+      <div class="dash-stat-pill-val" style="color:var(--pk)">${dueCount}</div>
+      <div class="dash-stat-pill-label">Reviews Due</div>
+    </div>
+    <div class="dash-stat-pill">
+      <div class="dash-stat-pill-val" style="color:var(--cy)">${App.badges.length}</div>
+      <div class="dash-stat-pill-label">Badges Earned</div>
+    </div>
+    <div class="dash-stat-pill">
+      <div class="dash-stat-pill-val" style="color:var(--tx2)">${App.streakDays}</div>
+      <div class="dash-stat-pill-label">Day Streak</div>
+    </div>`;
+}
+
+function renderDashSubtopics() {
+  const el = document.getElementById('dash-subtopic-progress');
+  if (!el) return;
+  el.innerHTML = '';
+  SUBTOPICS.forEach((st, i) => {
+    const sp = App.stProgress[i];
+    const total = st.cards.length + st.cps.length;
+    const done  = sp.shown + sp.cpDone.length;
+    const pct   = sp.allDone ? 100 : Math.round(done / total * 100);
+    const row = document.createElement('div');
+    row.className = 'dash-st-item';
+    row.innerHTML = `
+      <div class="dash-st-label ${sp.allDone ? 'dash-st-done' : ''}">${sp.allDone ? '✓ ' : ''}${st.short}</div>
+      <div class="dash-st-bar-wrap"><div class="dash-st-bar" style="width:${pct}%"></div></div>
+      <div class="dash-st-pct">${pct}%</div>`;
+    el.appendChild(row);
+  });
+}
+
+function renderDashDue() {
+  const el = document.getElementById('dash-due-reviews');
+  if (!el) return;
+  const today = todayStr();
+  const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowStr = tomorrow.toISOString().slice(0,10);
+  const in3 = new Date(); in3.setDate(in3.getDate() + 3);
+  const in3Str = in3.toISOString().slice(0,10);
+
+  const items = [];
+  Object.entries(App.sr).forEach(([id, sr]) => {
+    if (!sr.nextReview) return;
+    const st = SUBTOPICS.find(s => s.id === id);
+    if (!st) return;
+    let status = 'soon', label = `Due ${sr.nextReview}`;
+    if (sr.nextReview < today) { status = 'overdue'; label = 'Overdue!'; }
+    else if (sr.nextReview === today) { status = 'today'; label = 'Due today'; }
+    else if (sr.nextReview === tomorrowStr) { label = 'Due tomorrow'; }
+    else if (sr.nextReview <= in3Str) { label = `Due in ${Math.round((new Date(sr.nextReview) - new Date(today)) / 86400000)} days`; }
+    items.push({ name: st.label, status, label });
+  });
+
+  if (items.length === 0) {
+    el.innerHTML = `<div class="dash-no-data">No reviews scheduled yet. Complete a quiz to set up your revision schedule!</div>`;
+    return;
+  }
+  // Sort: overdue first, then today, then soon
+  items.sort((a,b) => {
+    const o = { overdue:0, today:1, soon:2 };
+    return o[a.status] - o[b.status];
+  });
+  el.innerHTML = items.slice(0,6).map(it => `
+    <div class="dash-due-item">
+      <div class="dash-due-label">${it.name}</div>
+      <div class="dash-due-badge ${it.status}">${it.label}</div>
+    </div>`).join('');
+}
+
+function renderDashBadges() {
+  const el = document.getElementById('dash-recent-badges');
+  if (!el) return;
+  const earned = BADGES.filter(b => App.badges.includes(b.id));
+  if (earned.length === 0) {
+    el.innerHTML = `<div class="dash-no-data">No badges yet — start learning to earn your first!</div>`;
+    return;
+  }
+  const recent = earned.slice(-4).reverse();
+  el.innerHTML = `<div class="dash-badge-list">${recent.map(b => `
+    <div class="dash-badge-item">
+      <div class="dash-badge-emoji">${b.icon}</div>
+      <div class="dash-badge-info">
+        <div class="dash-badge-name">${b.name}</div>
+        <div class="dash-badge-desc">${b.desc}</div>
+      </div>
+    </div>`).join('')}</div>
+  <div style="margin-top:12px;font-size:.78rem;color:var(--tx3);">${earned.length} / ${BADGES.length} badges unlocked — <span style="color:var(--pu);cursor:pointer;font-weight:700;" onclick="showPage('profile')">see all →</span></div>`;
+}
+
+function renderDashTileLocks() {
+  const unlocked = App.learned.size > 0;
+  ['dash-tile-fc','dash-tile-quiz','dash-tile-games'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('locked-tile', !unlocked);
+  });
+}
+
 /* ══════════════ PROFILE / SHOP / BADGES ══════════════ */
 function renderProfile() {
   renderAvatarShop();
