@@ -335,36 +335,28 @@
     document.getElementById('splash').appendChild(s);
   }
 
-  /* ── Boot ── */
-  function startApp() {
-    document.getElementById('splash').classList.add('gone');
+  function boot() {
     loadState();
     refreshLocks();
     initLearn();
     renderCalendar();
     updateXPBar();
     document.getElementById('nav-avatar').innerHTML = renderAvatar(App.equippedAvatar, 28);
+  }
+
+  /* ── Splash start button ── */
+  function startApp() {
+    document.getElementById('splash').classList.add('gone');
+    boot();
   }
 
   /* Auto-start if previously visited */
   window.addEventListener('DOMContentLoaded', () => {
-    loadState();
-    refreshLocks();
-    initLearn();
-    renderCalendar();
-    updateXPBar();
-    document.getElementById('nav-avatar').innerHTML = renderAvatar(App.equippedAvatar, 28);
+    boot();
     if (App.learned.size > 0 || App.stProgress.some(sp => sp.shown > 0)) {
       document.getElementById('splash').classList.add('gone');
     }
   });
-
-  // Patch showPage to handle profile
-  const _origShowPage = showPage;
-  function showPage(name) {
-    _origShowPage(name);
-    if (name === 'profile') renderProfile();
-  }
 </script>
 </body>
 </html>
