@@ -241,7 +241,8 @@ function showPage(name) {
   if (name === 'flashcards') initFC();
   if (name === 'quiz')       initQuiz();
   if (name === 'calendar')   renderCalendar();
-  if (name === 'profile')    renderProfile();}
+  if (name === 'profile')    renderProfile();
+  if (name === 'about')      renderDashboard();}
 
 function tryPage(name) {
   if (App.learned.size === 0) {
@@ -257,6 +258,7 @@ function refreshLocks() {
     const el = document.querySelector(`.ntab[data-page="${n}"]`);
     if (el) el.classList.toggle('locked', !unlocked);
   });
+  if (typeof renderDashTileLocks === 'function') renderDashTileLocks();
 }
 
 /* ── TOAST ── */
