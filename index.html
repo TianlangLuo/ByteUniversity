@@ -35,7 +35,8 @@
     <span class="nb-badge">CS5</span>
   </a>
   <div class="nav-tabs">
-    <button class="ntab on"     data-page="learn"      onclick="showPage('learn')">📖 Learn</button>
+    <button class="ntab on"        data-page="about"      onclick="showPage('about')">🏠 Home</button>
+    <button class="ntab"           data-page="learn"      onclick="showPage('learn')">📖 Learn</button>
     <button class="ntab locked" data-page="flashcards" onclick="tryPage('flashcards')">🃏 Flashcards</button>
     <button class="ntab locked" data-page="quiz"       onclick="tryPage('quiz')">✏️ Quiz</button>
     <button class="ntab locked" data-page="games"      onclick="tryPage('games')">🎮 Games</button>
@@ -43,7 +44,6 @@
     <button class="ntab"        data-page="podcast"    onclick="showPage('podcast')">🎙️ Podcast</button>
     <button class="ntab"        data-page="resources"  onclick="showPage('resources')">🔗 Resources</button>
     <button class="ntab"        data-page="profile"    onclick="showPage('profile')">🏅 Profile</button>
-    <button class="ntab"        data-page="about"      onclick="showPage('about')">ℹ️ About</button>
   </div>
   <div class="xp-nav-wrap">
     <div id="nav-avatar"></div>
@@ -60,7 +60,7 @@
 <div id="toast"></div>
 
 <!-- ════════════════════ LEARN ════════════════════ -->
-<div class="page on" id="page-learn">
+<div class="page" id="page-learn">
   <div class="wrap-sm">
     <div class="hero">
       <h1>🖥️ Issues &amp; Impact</h1>
@@ -535,91 +535,160 @@
   </div>
 </div>
 
-<!-- ════════════════════ ABOUT (UPDATED) ════════════════════ -->
-<div class="page" id="page-about">
-  <div class="about-hero">
-    <div class="about-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1400&q=80')">
-      <div class="about-hero-overlay"></div>
-      <div class="about-hero-content">
-        <div class="bu-logo-large">B<span>U</span></div>
-        <h1 class="about-title">ByteUniversity</h1>
-        <p class="about-tagline">Revision that actually works.</p>
+<!-- ════════════════════ HOME / DASHBOARD ════════════════════ -->
+<div class="page on" id="page-about">
+
+  <!-- Hero banner -->
+  <div class="dash-hero">
+    <div class="dash-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1400&q=80')">
+      <div class="dash-hero-overlay"></div>
+    </div>
+    <div class="dash-hero-content wrap">
+      <div class="dash-hero-left">
+        <div class="dash-eyebrow">Edexcel GCSE Computer Science</div>
+        <h1 class="dash-title">ByteUniversity</h1>
+        <p class="dash-subtitle">Your complete revision hub for Topic 5 — Issues &amp; Impact.</p>
+        <div class="dash-cta-row">
+          <button class="btn btn-pu btn-lg" onclick="showPage('learn')">📖 Start Learning</button>
+          <button class="btn btn-ghost btn-lg" onclick="showPage('podcast')">🎙️ Listen to Podcast</button>
+        </div>
+      </div>
+      <div class="dash-hero-right">
+        <div class="dash-stat-card">
+          <div class="dash-stat-row" id="dash-progress-row"></div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="wrap-sm">
-    <div class="about-intro">
-      <p>ByteUniversity is an interactive GCSE Computer Science revision platform built to go beyond passive reading. Every feature — from card-by-card content delivery to spaced repetition scheduling to playable games — is designed around how memory actually works.</p>
+
+  <div class="wrap" style="padding-top:32px;">
+
+    <!-- Quick stats bar -->
+    <div class="dash-stats-bar" id="dash-stats-bar"></div>
+
+    <!-- Two column: nav tiles + sidebar -->
+    <div class="dash-body">
+
+      <!-- Left: nav tiles -->
+      <div class="dash-tiles">
+        <div class="dash-section-label">Jump to a section</div>
+        <div class="dash-tile-grid">
+
+          <div class="dash-tile tile-learn" onclick="showPage('learn')">
+            <div class="dash-tile-icon">📖</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Learn</div>
+              <div class="dash-tile-desc">Card-by-card content with checkpoint questions</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+          <div class="dash-tile tile-fc locked-tile" id="dash-tile-fc" onclick="tryPage('flashcards')">
+            <div class="dash-tile-icon">🃏</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Flashcards</div>
+              <div class="dash-tile-desc">Flip through 60+ terms and definitions</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+          <div class="dash-tile tile-quiz locked-tile" id="dash-tile-quiz" onclick="tryPage('quiz')">
+            <div class="dash-tile-icon">✏️</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Quiz</div>
+              <div class="dash-tile-desc">40+ questions — score 80%+ to mark topics reviewed</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+          <div class="dash-tile tile-games locked-tile" id="dash-tile-games" onclick="tryPage('games')">
+            <div class="dash-tile-icon">🎮</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Games</div>
+              <div class="dash-tile-desc">Snake, Memory Match &amp; Pac-Man — revision that's fun</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+          <div class="dash-tile tile-cal" onclick="showPage('calendar')">
+            <div class="dash-tile-icon">📅</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Calendar</div>
+              <div class="dash-tile-desc">Spaced repetition schedule &amp; mastery tracker</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+          <div class="dash-tile tile-pod" onclick="showPage('podcast')">
+            <div class="dash-tile-icon">🎙️</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Podcast</div>
+              <div class="dash-tile-desc">Full audio episode covering all of Topic 5</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+          <div class="dash-tile tile-res" onclick="showPage('resources')">
+            <div class="dash-tile-icon">🔗</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Resources</div>
+              <div class="dash-tile-desc">Craig &amp; Dave videos + documentaries, journals &amp; TED talks</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+          <div class="dash-tile tile-profile" onclick="showPage('profile')">
+            <div class="dash-tile-icon">🏅</div>
+            <div class="dash-tile-info">
+              <div class="dash-tile-name">Profile &amp; Shop</div>
+              <div class="dash-tile-desc">XP, badges and avatar collection</div>
+            </div>
+            <div class="dash-tile-arrow">→</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right: sidebar -->
+      <div class="dash-sidebar">
+
+        <!-- Subtopic progress -->
+        <div class="dash-widget">
+          <div class="dash-widget-title">📚 Subtopic Progress</div>
+          <div id="dash-subtopic-progress"></div>
+        </div>
+
+        <!-- Due for review -->
+        <div class="dash-widget">
+          <div class="dash-widget-title">📅 Due for Review</div>
+          <div id="dash-due-reviews"></div>
+        </div>
+
+        <!-- Recent badges -->
+        <div class="dash-widget">
+          <div class="dash-widget-title">🏅 Recent Badges</div>
+          <div id="dash-recent-badges"></div>
+        </div>
+
+      </div>
     </div>
-    <div class="about-features">
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(99,102,241,.15);border-color:rgba(99,102,241,.3);">📖</div>
-        <div>
-          <div class="about-feat-title">Active Learning, Not Passive Reading</div>
-          <div class="about-feat-desc">Content reveals one card at a time, with checkpoint questions blocking progress until each concept is genuinely understood — no skimming allowed.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(34,211,238,.1);border-color:rgba(34,211,238,.3);">📅</div>
-        <div>
-          <div class="about-feat-title">Spaced Repetition Built In</div>
-          <div class="about-feat-desc">A smart calendar schedules exactly when to revisit each topic based on performance, using the same memory science behind tools like Anki.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);">⚡</div>
-        <div>
-          <div class="about-feat-title">XP &amp; Avatars</div>
-          <div class="about-feat-desc">Every correct answer, completed subtopic, and on-time review earns XP — spent in the avatar shop to unlock new characters, keeping motivation high throughout revision.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.3);">🏅</div>
-        <div>
-          <div class="about-feat-title">18 Unlockable Badges</div>
-          <div class="about-feat-desc">Real study habits get rewarded. Early Bird, Week Warrior, Perfectionist, Speed Runner — badges that encourage the right behaviours, not just time on screen.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);">🎮</div>
-        <div>
-          <div class="about-feat-title">Three Playable Games</div>
-          <div class="about-feat-desc">Snake, Memory Match, and Pac-Man aren't decorations — answer questions correctly to stay alive, turning vocabulary drilling into something students actually want to do.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.3);">🎙️</div>
-        <div>
-          <div class="about-feat-title">Podcast for On-the-Go Revision</div>
-          <div class="about-feat-desc">A full-length audio episode covers every Topic 5 subtopic — perfect for commutes, walks, or winding down. Listen first to get the big picture, then drill the details.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(244,114,182,.1);border-color:rgba(244,114,182,.3);">🎬</div>
-        <div>
-          <div class="about-feat-title">Craig &amp; Dave Curriculum Videos</div>
-          <div class="about-feat-desc">All 8 official Craig &amp; Dave Edexcel Topic 5 videos are linked directly in the Resources section — perfectly matched to each subtopic for easy access.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.3);">🌍</div>
-        <div>
-          <div class="about-feat-title">Curated Further Reading</div>
-          <div class="about-feat-desc">Handpicked documentaries, TED talks, peer-reviewed journals, and articles go beyond the spec — connecting GCSE concepts to real-world events, from the Snowden revelations to Amazon's biased hiring AI.</div>
-        </div>
-      </div>
-      <div class="about-feat">
-        <div class="about-feat-icon" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);">📚</div>
-        <div>
-          <div class="about-feat-title">Covers the Full Spec</div>
-          <div class="about-feat-desc">All 7 Topic 5 subtopics, 60+ flashcards, 40+ quiz questions, and inline diagrams — everything needed for Edexcel GCSE Computer Science Topic 5 in one place.</div>
-        </div>
+
+    <!-- About this site -->
+    <div class="dash-about-strip">
+      <div class="dash-about-title">About ByteUniversity</div>
+      <p class="dash-about-intro">An interactive GCSE Computer Science revision platform built around how memory actually works — not passive reading, but active recall, spaced repetition, and genuine engagement.</p>
+      <div class="dash-feat-grid">
+        <div class="dash-feat"><span class="dash-feat-icon">📖</span><div><b>Active Learning</b> — Cards reveal one at a time; checkpoint questions block progress until concepts stick.</div></div>
+        <div class="dash-feat"><span class="dash-feat-icon">📅</span><div><b>Spaced Repetition</b> — A smart calendar schedules reviews based on performance, using the same science as Anki.</div></div>
+        <div class="dash-feat"><span class="dash-feat-icon">⚡</span><div><b>XP &amp; Avatars</b> — Every correct answer earns XP to spend in the avatar shop, keeping motivation high.</div></div>
+        <div class="dash-feat"><span class="dash-feat-icon">🏅</span><div><b>18 Badges</b> — Early Bird, Week Warrior, Perfectionist and more — rewarding the right study habits.</div></div>
+        <div class="dash-feat"><span class="dash-feat-icon">🎮</span><div><b>Three Games</b> — Snake, Memory Match and Pac-Man turn vocabulary drilling into something worth doing.</div></div>
+        <div class="dash-feat"><span class="dash-feat-icon">🎙️</span><div><b>Podcast</b> — A full audio episode covering every subtopic — perfect for commutes and winding down.</div></div>
+        <div class="dash-feat"><span class="dash-feat-icon">🎬</span><div><b>Craig &amp; Dave Videos</b> — All 8 Edexcel Topic 5 curriculum videos linked and described.</div></div>
+        <div class="dash-feat"><span class="dash-feat-icon">🌍</span><div><b>Further Reading</b> — Documentaries, TED talks and peer-reviewed journals beyond the spec.</div></div>
       </div>
     </div>
-    <div class="about-footer">
-      <div class="bu-logo-large small">B<span>U</span></div>
-      <p>ByteUniversity · Built for Edexcel GCSE Computer Science</p>
-    </div>
+
   </div>
 </div>
 
@@ -645,6 +714,8 @@
     renderCalendar();
     updateXPBar();
     document.getElementById('nav-avatar').innerHTML = renderAvatar(App.equippedAvatar, 28);
+    // Show home/dashboard by default
+    showPage('about');
   }
 
   function startApp() {
