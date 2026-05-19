@@ -47,7 +47,7 @@ body {
 }
 .ntab:hover { color:var(--tx); background:var(--surf2); }
 .ntab.on { color:var(--pu); background:var(--pu-d); }
-.ntab.locked { opacity:.32; cursor:not-allowed; pointer-events:none; }
+.ntab.locked { opacity:.38; cursor:not-allowed; }
 
 /* ── LAYOUT ── */
 .page { display:none; padding:70px 0 70px; min-height:100vh; }
