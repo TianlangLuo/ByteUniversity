@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS5 · Issues &amp; Impact · GCSE Computer Science</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/learn.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+<!-- ════════════════════════════════════ SPLASH ════════════════════════════════════ -->
+<div id="splash">
+  <div class="sp-eye">Edexcel GCSE Computer Science</div>
+  <div class="sp-h">Issues &amp;<br>Impact</div>
+  <div class="sp-sub">An interactive revision platform covering Topic 5 — from e-waste to encryption.</div>
+  <div class="sp-chips">
+    <span class="sp-chip">🌿 Environment</span>
+    <span class="sp-chip">👤 Personal Data</span>
+    <span class="sp-chip">⚖️ Legislation</span>
+    <span class="sp-chip">🤖 AI &amp; Ethics</span>
+    <span class="sp-chip">📜 IP</span>
+    <span class="sp-chip">🔓 Threats</span>
+    <span class="sp-chip">🛡️ Protection</span>
+  </div>
+  <button class="sp-btn" onclick="startApp()">Start Learning →</button>
+</div>
+
+<!-- ════════════════════════════════════ NAV ════════════════════════════════════ -->
+<nav id="nav">
+  <a href="#" class="nb" onclick="return false;">
+    <span class="nb-title">CS5 · Issues &amp; Impact</span>
+    <span class="nb-badge">GCSE</span>
+  </a>
+  <ul class="nav-tabs">
+    <li><button class="ntab on"     data-page="learn"      onclick="showPage('learn')">📖 Learn</button></li>
+    <li><button class="ntab locked" data-page="flashcards" onclick="tryPage('flashcards')">🃏 Flashcards</button></li>
+    <li><button class="ntab locked" data-page="quiz"       onclick="tryPage('quiz')">✏️ Quiz</button></li>
+    <li><button class="ntab locked" data-page="games"      onclick="tryPage('games')">🎮 Games</button></li>
+    <li><button class="ntab"        data-page="calendar"   onclick="showPage('calendar')">📅 Calendar</button></li>
+  </ul>
+</nav>
+
+<div id="toast"></div>
+
+<!-- ════════════════════════════════════ LEARN ════════════════════════════════════ -->
+<div class="page on" id="page-learn">
+  <div class="wrap-sm">
+    <div class="hero">
+      <h1>🖥️ Issues &amp; Impact</h1>
+      <p>Work through each subtopic — checkpoint questions unlock every two cards.</p>
+    </div>
+
+    <div class="st-nav" id="st-nav"></div>
+
+    <div class="lp-bar-row">
+      <span class="lp-bar-label" id="lp-label">0%</span>
+      <div class="lp-bar-track"><div class="lp-bar-fill" id="lp-fill" style="width:0%"></div></div>
+    </div>
+
+    <div id="learn-area"></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ FLASHCARDS ════════════════════════════════════ -->
+<div class="page" id="page-flashcards">
+  <div class="wrap-sm">
+    <div class="hero">
+      <h1>🃏 Flashcards</h1>
+      <p>Click a card to flip it. Use the arrows to move through the deck.</p>
+    </div>
+
+    <div class="fc-bar">
+      <select class="sel" id="fc-sel" onchange="loadFC()">
+        <option value="all">All Topics</option>
+      </select>
+      <button class="btn btn-ghost btn-sm" onclick="shuffleFC()">🔀 Shuffle</button>
+      <button class="btn btn-ghost btn-sm" onclick="prevFC()">← Prev</button>
+      <span class="fc-count" id="fc-count">1 / 1</span>
+      <button class="btn btn-pu btn-sm"   onclick="nextFC()">Next →</button>
+    </div>
+
+    <div class="fc-wrap" onclick="flipFC()">
+      <div class="flashcard" id="fc-card">
+        <div class="fc-face fc-front">
+          <div class="fc-lbl">Term</div>
+          <div class="fc-txt" id="fc-front">Loading…</div>
+          <div class="fc-hint">Click to reveal definition</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-lbl">Definition</div>
+          <div class="fc-txt" id="fc-back">…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ QUIZ ════════════════════════════════════ -->
+<div class="page" id="page-quiz">
+  <div class="wrap-sm">
+    <div class="hero">
+      <h1>✏️ Topic Quiz</h1>
+      <p>Score 80%+ to mark topics as reviewed and schedule them on your calendar!</p>
+    </div>
+
+    <div class="qz-wrap">
+      <div class="qz-bar">
+        <select class="sel" id="qz-sel" onchange="startQuiz()" style="flex:1;min-width:160px;">
+          <option value="all">All Topics</option>
+        </select>
+        <button class="btn btn-pu btn-sm" onclick="startQuiz()">🔄 New Quiz</button>
+      </div>
+
+      <!-- Question card -->
+      <div class="qz-card" id="qz-card">
+        <div class="qz-pips" id="qz-pips"></div>
+        <div class="qz-num" id="qz-num">Question 1 of 15</div>
+        <div class="qz-q"   id="qz-q">Loading…</div>
+        <div class="qopts"  id="qz-opts"></div>
+        <div class="qfb"    id="qz-fb"   style="display:none;"></div>
+        <button class="btn btn-pu" id="qz-next" style="display:none;margin-top:16px;" onclick="nextQzQ()">Next Question →</button>
+      </div>
+
+      <!-- Score screen -->
+      <div class="score-screen" id="qz-score" style="display:none;">
+        <div class="score-ring">
+          <svg id="score-ring-svg" viewBox="0 0 136 136"></svg>
+          <div class="score-ring-num" id="score-num">0/0</div>
+        </div>
+        <div class="score-msg" id="score-msg">Well done!</div>
+        <div class="score-det" id="score-det"></div>
+        <button class="btn btn-pu btn-lg" onclick="startQuiz()">🔄 Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ GAMES ════════════════════════════════════ -->
+<div class="page" id="page-games">
+  <div class="wrap">
+    <div class="hero">
+      <h1>🎮 Learning Games</h1>
+      <p>Answer questions correctly to score points. Complete all correctly to mark topics reviewed!</p>
+    </div>
+
+    <div class="games-grid">
+      <div class="gcard pu" onclick="openGame('snake')">
+        <div class="gcard-icon">🐍</div>
+        <h3>Quiz Snake</h3>
+        <p>Eat food to grow. Every 20 points, answer a question correctly — or lose a life!</p>
+      </div>
+      <div class="gcard gn" onclick="openGame('memory')">
+        <div class="gcard-icon">🧠</div>
+        <h3>Memory Match</h3>
+        <p>Match keywords to their definitions. Test how well you know the vocabulary!</p>
+      </div>
+      <div class="gcard ye" onclick="openGame('pac')">
+        <div class="gcard-icon">👻</div>
+        <h3>Quiz Pac-Man</h3>
+        <p>Eat dots and dodge ghosts. Collide with a ghost and you'll face a question!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SNAKE MODAL -->
+  <div class="gmodal" id="gm-snake">
+    <div class="ginner" style="max-width:480px;">
+      <button class="gclose" onclick="closeGame('snake')">✕</button>
+      <h3>🐍 Quiz Snake</h3>
+      <div class="gscore-bar">
+        <span>Score: <b id="gm-snake-score">0</b></span>
+        <span class="lives">Lives: <b id="gm-snake-lives">❤️❤️❤️</b></span>
+      </div>
+      <canvas id="snake-canvas" width="400" height="320" style="border:2px solid #34d399;border-radius:10px;"></canvas>
+      <p style="text-align:center;color:var(--tx3);font-size:.8rem;margin:6px 0;">Arrow keys or WASD to move</p>
+      <div class="gqbox" id="snake-qbox">
+        <div class="gqtxt" id="snake-q-text"></div>
+        <div class="gopts" id="snake-q-opts"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap;">
+        <select class="sel" id="gm-snake-sel" style="flex:1;" onchange="initSnake()">
+          <option value="all">All Topics</option>
+        </select>
+        <button class="btn btn-gn btn-sm" onclick="initSnake()">▶ Start</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMORY MODAL -->
+  <div class="gmodal" id="gm-memory">
+    <div class="ginner" style="max-width:680px;">
+      <button class="gclose" onclick="closeGame('memory')">✕</button>
+      <h3>🧠 Memory Match</h3>
+      <div class="gscore-bar">
+        <span>Pairs: <b id="mem-pairs">0</b></span>
+        <span>Moves: <b id="mem-moves">0</b></span>
+        <span>Time: <b id="mem-time">0</b>s</span>
+      </div>
+      <div class="mem-grid" id="mem-grid"></div>
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+        <select class="sel" id="gm-memory-sel" style="flex:1;" onchange="initMemory()">
+          <option value="all">All Topics</option>
+        </select>
+        <button class="btn btn-gn btn-sm" onclick="initMemory()">▶ New Game</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAC-MAN MODAL -->
+  <div class="gmodal" id="gm-pac">
+    <div class="ginner" style="max-width:500px;">
+      <button class="gclose" onclick="closeGame('pac')">✕</button>
+      <h3>👻 Quiz Pac-Man</h3>
+      <div class="gscore-bar">
+        <span>Score: <b id="gm-pac-score">0</b></span>
+        <span class="lives">Lives: <b id="gm-pac-lives">❤️❤️❤️</b></span>
+      </div>
+      <canvas id="pac-canvas" width="420" height="300" style="border:2px solid #fbbf24;border-radius:10px;"></canvas>
+      <p style="text-align:center;color:var(--tx3);font-size:.8rem;margin:6px 0;">Arrow keys or WASD to move</p>
+      <div class="gqbox" id="pac-qbox">
+        <div class="gqtxt" id="pac-q-text"></div>
+        <div class="gopts" id="pac-q-opts"></div>
+      </div>
+      <div style="text-align:center;margin-top:10px;">
+        <button class="btn btn-gn btn-sm" onclick="initPac()">▶ Start / Restart</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ CALENDAR ════════════════════════════════════ -->
+<div class="page" id="page-calendar">
+  <div class="wrap">
+    <div class="hero">
+      <h1>📅 Spaced Repetition Calendar</h1>
+      <p>Complete quizzes or games to increase your mastery level and schedule future reviews.</p>
+    </div>
+
+    <div class="cal-wrap">
+      <div class="mastery-grid" id="mastery-panel"></div>
+
+      <div class="cal-legend">
+        <div class="cl-item"><div class="cl-dot" style="background:var(--pu);"></div> Due today</div>
+        <div class="cl-item"><div class="cl-dot" style="background:var(--pk);"></div> Overdue</div>
+        <div class="cl-item"><div class="cl-dot" style="background:var(--gn);"></div> Reviewed today</div>
+      </div>
+
+      <div class="cal-hdr">
+        <button class="cal-nav" onclick="changeMonth(-1)">← Prev</button>
+        <div class="cal-title" id="cal-month"></div>
+        <button class="cal-nav" onclick="changeMonth(1)">Next →</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════ SCRIPTS ════════════════════════════════════ -->
+<script src="js/data.js"></script>
+<script src="js/state.js"></script>
+<script src="js/learn.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+  /* ── Splash stars ── */
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 1;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+2).toFixed(1)}s;--dl:${(Math.random()*4).toFixed(1)}s`;
+    document.getElementById('splash').appendChild(s);
+  }
+
+  /* ── Boot ── */
+  function startApp() {
+    document.getElementById('splash').classList.add('gone');
+    loadState();
+    refreshLocks();
+    initLearn();
+    renderCalendar();
+  }
+
+  /* Auto-start if previously visited */
+  window.addEventListener('DOMContentLoaded', () => {
+    loadState();
+    refreshLocks();
+    initLearn();
+    renderCalendar();
+    if (App.learned.size > 0 || App.stProgress.some(sp => sp.shown > 0)) {
+      document.getElementById('splash').classList.add('gone');
+    }
+  });
+</script>
+</body>
+</html>
