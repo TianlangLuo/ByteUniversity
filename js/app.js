@@ -517,15 +517,27 @@ function renderCalGrid() {
   const { calMonth: m, calYear: y } = App;
   document.getElementById('cal-month').textContent = new Date(y, m, 1).toLocaleDateString('en-GB', {month:'long',year:'numeric'});
 
-  // Build review map
+  // Build review map — key = date string, value = array of {label, status}
   const rmap = {};
+  const addPill = (date, label, status) => {
+    if (!rmap[date]) rmap[date] = [];
+    rmap[date].push({ label, status });
+  };
+
   Object.entries(App.sr).forEach(([id, sr]) => {
-    if (!sr.nextReview) return;
     const st = SUBTOPICS.find(s => s.id === id);
     if (!st) return;
-    const status = sr.lastReviewed === today ? 'done' : sr.nextReview < today ? 'overdue' : 'due';
-    if (!rmap[sr.nextReview]) rmap[sr.nextReview] = [];
-    rmap[sr.nextReview].push({ label: st.short, status });
+
+    // If reviewed today, show a green 'done' pill on today
+    if (sr.lastReviewed === today) {
+      addPill(today, st.short, 'done');
+    }
+
+    // Show the next scheduled review date (future or overdue)
+    if (sr.nextReview && sr.nextReview !== today) {
+      const status = sr.nextReview < today ? 'overdue' : 'due';
+      addPill(sr.nextReview, st.short, status);
+    }
   });
 
   const grid = document.getElementById('cal-grid');
@@ -588,8 +600,10 @@ function renderProfile() {
   const level = Math.floor(App.totalXpEarned / 200) + 1;
   document.getElementById('prof-level').textContent  = 'Level ' + level;
   document.getElementById('prof-xp').textContent     = App.xp + ' XP available';
-  document.getElementById('prof-total').textContent  = App.totalXpEarned + ' total XP earned';
-  document.getElementById('prof-streak').textContent = App.streakDays + ' day streak 🔥';
+  document.getElementById('prof-total').textContent  = App.totalXpEarned;
+  document.getElementById('prof-streak').textContent = App.streakDays;
+  const bstat = document.getElementById('prof-badges-stat');
+  if (bstat) bstat.textContent = App.badges.length + ' / ' + BADGES.length;
   document.getElementById('prof-avatar-big').innerHTML = renderAvatar(App.equippedAvatar, 72);
 }
 
