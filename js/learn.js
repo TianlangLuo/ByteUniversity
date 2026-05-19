@@ -67,6 +67,9 @@ function loadST(idx) {
   const area = document.getElementById('learn-area');
   area.innerHTML = '';
 
+  // Record start time once when user first opens a subtopic
+  if (!sp.allDone && !sp._startTime) sp._startTime = Date.now();
+
   const totalItems = st.cards.length + st.cps.length;
   const done = sp.shown + sp.cpDone.length;
   document.getElementById('lp-fill').style.width = Math.round(done / totalItems * 100) + '%';
@@ -147,8 +150,7 @@ function renderProgressive(st, sp, stIdx, area) {
 
   // Reached end — mark complete
   if (!sp.allDone) {
-    sp._startTime = sp._startTime || Date.now();
-    const elapsed = (Date.now() - (sp._startTime || Date.now())) / 1000;
+    const elapsed = sp._startTime ? (Date.now() - sp._startTime) / 1000 : 999;
     if (elapsed < 180) App._speedRun = true;
     sp.allDone = true;
     App.learned.add(st.id);
